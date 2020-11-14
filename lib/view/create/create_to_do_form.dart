@@ -16,9 +16,12 @@ class _CreateToDoFormState extends State<CreateToDoForm> {
     return Form(
       key: _formKey,
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
+          Container(),
           TextFormField(
             initialValue: title,
+            textAlign: TextAlign.center,
             validator: (value) {
               if (value.isEmpty) {
                 return 'Please enter a title';
