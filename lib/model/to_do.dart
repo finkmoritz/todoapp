@@ -3,4 +3,11 @@ class ToDo {
 
   String title;
   bool completed;
+
+  factory ToDo.fromJson(Map<String, dynamic> json) {
+    return ToDo(
+      title: json['title'],
+      completed: json['completed'],
+    );
+  }
 }
