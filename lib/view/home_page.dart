@@ -38,21 +38,34 @@ class _HomePageState extends State<HomePage> {
         itemCount: list.length,
         itemBuilder: (context, index) => ToDoListItem(list[index]),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => AddToDoPage(),
-          ),
-        ).then((title) {
-          if(title != null) {
-            setState(() {
-              ToDoListProvider.toDoList.add(ToDo(title: title));
-            });
-          }
-        }),
-        child: Icon(Icons.add),
+      floatingActionButton: Builder(
+        builder: (context) {
+          return _buildFloatingActionButton(context);
+        },
       ),
+    );
+  }
+
+  Widget _buildFloatingActionButton(BuildContext context) {
+    return FloatingActionButton(
+      onPressed: () => Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => AddToDoPage(),
+        ),
+      ).then((title) {
+        if(title != null) {
+          setState(() {
+            ToDoListProvider.toDoList.add(ToDo(title: title));
+          });
+          Scaffold.of(context).showSnackBar(
+              SnackBar(
+                content: Text('Added "$title"', textAlign: TextAlign.center,),
+              ),
+          );
+        }
+      }),
+      child: Icon(Icons.add),
     );
   }
 }
