@@ -44,11 +44,13 @@ class _HomePageState extends State<HomePage> {
           MaterialPageRoute(
             builder: (context) => AddToDoPage(),
           ),
-        ).then((title) => setState(() {
+        ).then((title) {
           if(title != null) {
-            ToDoListProvider.toDoList.add(ToDo(title: title));
+            setState(() {
+              ToDoListProvider.toDoList.add(ToDo(title: title));
+            });
           }
-        })),
+        }),
         child: Icon(Icons.add),
       ),
     );
