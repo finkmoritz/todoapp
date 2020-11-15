@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:todoapp/view/create/create_to_do_form.dart';
 
-class CreateToDoPage extends StatelessWidget {
+import 'add_to_do_form.dart';
+
+class AddToDoPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +12,7 @@ class CreateToDoPage extends StatelessWidget {
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
-        child: CreateToDoForm(),
+        child: AddToDoForm(),
       ),
     );
   }

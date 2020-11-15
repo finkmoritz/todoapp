@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:todoapp/model/to_do.dart';
-import 'package:todoapp/view/create/create_to_do_page.dart';
 
-import 'list/to_do_list_item.dart';
+import 'add/add_to_do_page.dart';
+import 'to_do_list_item.dart';
 import '../service/to_do_list_provider.dart';
 
 class HomePage extends StatefulWidget {
@@ -42,10 +42,12 @@ class _HomePageState extends State<HomePage> {
         onPressed: () => Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => CreateToDoPage(),
+            builder: (context) => AddToDoPage(),
           ),
         ).then((title) => setState(() {
-          ToDoListProvider.toDoList.add(ToDo(title: title));
+          if(title != null) {
+            ToDoListProvider.toDoList.add(ToDo(title: title));
+          }
         })),
         child: Icon(Icons.add),
       ),
