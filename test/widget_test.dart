@@ -1,30 +1,38 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility that Flutter provides. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:todoapp/main.dart';
+import 'package:todoapp/model/to_do.dart';
+import 'package:todoapp/service/to_do_list_provider.dart';
+
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
+  testWidgets('Test common user journey', (WidgetTester tester) async {
+    // Provide a dummy to do list (instead of HTTP request)
+    ToDoListProvider.toDoList = [
+      ToDo(title: 'TestTitle', completed: true),
+    ];
+
+    // Build our app.
     await tester.pumpWidget(ToDoApp());
+    await tester.pumpAndSettle();
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    // Verify that the To Do list is filled.
+    expect(find.text('TestTitle'), findsOneWidget);
 
-    // Tap the '+' icon and trigger a frame.
+    // Tap the '+' floating action button.
     await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    await tester.pumpAndSettle();
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    // Verify that the text input field is already filled.
+    expect(find.text('New To Do Item'), findsOneWidget);
+
+    // Tap the 'Add' button.
+    await tester.tap(find.byType(ElevatedButton));
+    await tester.pumpAndSettle();
+
+    // Verify that the new item was added to the To Do list.
+    expect(find.text('TestTitle'), findsOneWidget);
+    expect(find.text('New To Do Item'), findsOneWidget);
   });
 }
