@@ -33,7 +33,7 @@ class _AddToDoFormState extends State<AddToDoForm> {
           ElevatedButton(
             onPressed: () {
               if (_formKey.currentState.validate()) {
-                Navigator.pop(context, title);
+                Navigator.pop(context, title.trim());
               }
             },
             child: Text('Add'),
